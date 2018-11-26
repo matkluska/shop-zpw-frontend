@@ -1,0 +1,7 @@
+<div class="container">
+  <div class="card-deck">
+    <app-product [product]="p" *ngFor="let p of products"
+                 (deleteProductEvent)="onDeleteProduct($event)">
+    </app-product>
+  </div>
+</div>
