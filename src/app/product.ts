@@ -1,7 +1,5 @@
 export class Product {
-  name: string;
-  products_quantity: number;
-  price: number;
-  description: string;
-  photo_url: string;
+  constructor(public name: string, public products_quantity: number, public price: number, public description: string,
+              public photo_url: string) {
+  }
 }

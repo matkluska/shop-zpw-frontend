@@ -6,11 +6,17 @@ import {FakeProducts} from './fake-products';
   providedIn: 'root'
 })
 export class ProductsService {
+  private productsKey = 'products';
 
   products: Product[];
 
   constructor() {
-    this.products = new FakeProducts().products;
+    const products = localStorage.getItem(this.productsKey);
+    if (products) {
+      this.products = JSON.parse(products);
+    } else {
+      this.products = new FakeProducts().products;
+    }
   }
 
   getProducts(): Product[] {
@@ -22,7 +28,8 @@ export class ProductsService {
   }
 
   addProduct(product: Product) {
-    this.products.concat(product);
+    this.products.push(product);
+    this.saveInLocalStorage();
   }
 
   deleteProduct(product: Product) {
@@ -30,6 +37,11 @@ export class ProductsService {
     if (index >= 0) {
       this.products.splice(index, 1);
     }
+    this.saveInLocalStorage();
+  }
+
+  private saveInLocalStorage() {
+    localStorage.setItem(this.productsKey, JSON.stringify(this.products));
   }
 
 }

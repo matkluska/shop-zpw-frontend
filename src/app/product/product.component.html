@@ -1,15 +1,6 @@
-<!--<div class="card border-secondary mb-3" style="width: 18rem;">-->
-<!--<img class="card-img-top" [src]="product.photo_url | safe" alt="Card image cap">-->
-<!--<div class="card-body">-->
-<!--<h5 class="card-title">{{product.name}}</h5>-->
-<!--<p class="card-text">{{product.description}}</p>-->
-<!--<button type="button" class="btn btn-danger" (click)="deleteProduct(product)">Delete</button>-->
-<!--</div>-->
-<!--</div>-->
-
 <div>
   <div class="card h-100">
-    <a href="#"><img class="card-img-top" [src]="product.photo_url | safe" alt="http://placehold.it/700x400"></a>
+    <a href="#"><img class="card-img-top" [src]="(product.photo_url || 'http://home4cooperation.info/sites/all/themes/home_of_cooperation_bootstrap_subtheme/images/default.jpg') | safe" alt="Product picture"></a>
     <div class="card-body">
       <h4 class="card-title">
         <a href="#">{{product.name}}</a>
