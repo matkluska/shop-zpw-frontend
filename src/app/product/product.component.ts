@@ -10,6 +10,8 @@ export class ProductComponent implements OnInit {
 
   @Input() product: Product;
   @Output() deleteProductEvent = new EventEmitter<Product>();
+  @Output() deleteProductFromShoppingCartEvent = new EventEmitter<Product>();
+  @Output() addProductToShoppingCartEvent = new EventEmitter<Product>();
 
   constructor() {
   }
@@ -21,4 +23,11 @@ export class ProductComponent implements OnInit {
     this.deleteProductEvent.emit(product);
   }
 
+  deleteProductFromShoppingCart(product: Product) {
+    this.deleteProductFromShoppingCartEvent.emit(product);
+  }
+
+  addProductToShoppingCart(product: Product) {
+    this.addProductToShoppingCartEvent.emit(product);
+  }
 }

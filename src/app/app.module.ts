@@ -7,9 +7,12 @@ import {FormsModule} from '@angular/forms';
 import {AppComponent} from './app.component';
 import {ProductComponent} from './product/product.component';
 import {ProductsComponent} from './products/products.component';
-import {SafePipe} from '../safe-pipe';
+import {SafePipe} from './pipes/safe.pipe';
 import {NewProductComponent} from './new-product/new-product.component';
 import {ShoppingCartComponent} from './shopping-cart/shopping-cart.component';
+import {NgxPaginationModule} from 'ngx-pagination';
+import {CategoriesPipe} from './pipes/categories.pipe';
+import { FiltersComponent } from './filters/filters.component';
 
 const appRoutes: Routes = [
   {path: 'products', component: ProductsComponent},
@@ -24,12 +27,15 @@ const appRoutes: Routes = [
     ProductComponent,
     ProductsComponent,
     SafePipe,
+    CategoriesPipe,
     NewProductComponent,
-    ShoppingCartComponent
+    ShoppingCartComponent,
+    FiltersComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    NgxPaginationModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [],

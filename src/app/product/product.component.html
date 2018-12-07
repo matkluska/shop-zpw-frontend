@@ -1,6 +1,8 @@
 <div>
   <div class="card h-100">
-    <a href="#"><img class="card-img-top" [src]="(product.photo_url || 'http://home4cooperation.info/sites/all/themes/home_of_cooperation_bootstrap_subtheme/images/default.jpg') | safe" alt="Product picture"></a>
+    <a href="#"><img class="card-img-top"
+                     [src]="(product.photo_url || 'http://home4cooperation.info/sites/all/themes/home_of_cooperation_bootstrap_subtheme/images/default.jpg') | safe"
+                     alt="Product picture"></a>
     <div class="card-body">
       <h4 class="card-title">
         <a href="#">{{product.name}}</a>
@@ -11,13 +13,17 @@
     </div>
     <div class="card-footer">
       <div class="row">
-        <small class="text-muted">{{product.products_quantity}}</small>
-        <button type="button" class="btn btn-labeled btn-success btn-sm">
-          <i class="fa fa-plus"></i>
-        </button>
-        <button type="button" class="btn btn-labeled btn-danger btn-sm">
-          <i class="fa fa-minus"></i>
-        </button>
+        <small class="text-muted"># {{product.products_quantity}}</small>
+        <div class="col float-right">
+          <button type="button" class="btn btn-labeled btn-success float-right btn-sm"
+                  (click)="addProductToShoppingCart(product)">
+            <i class="fa fa-plus"></i>
+          </button>
+          <button type="button" class="btn btn-labeled btn-danger float-right btn-sm "
+                  (click)="deleteProductFromShoppingCart(product)">
+            <i class="fa fa-minus"></i>
+          </button>
+        </div>
       </div>
     </div>
   </div>

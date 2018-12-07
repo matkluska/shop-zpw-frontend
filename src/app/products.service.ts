@@ -8,15 +8,18 @@ import {FakeProducts} from './fake-products';
 export class ProductsService {
   private productsKey = 'products';
 
-  products: Product[];
+  private readonly products: Product[];
 
   constructor() {
     const products = localStorage.getItem(this.productsKey);
     if (products) {
-      this.products = JSON.parse(products);
-    } else {
-      this.products = new FakeProducts().products;
+      const parsedProducts = JSON.parse(products);
+      if (parsedProducts.length > 0) {
+        this.products = parsedProducts;
+        return;
+      }
     }
+    this.products = new FakeProducts().products;
   }
 
   getProducts(): Product[] {
@@ -24,7 +27,7 @@ export class ProductsService {
   }
 
   getProduct(product: Product): Product {
-    return this.products.find(item => item.name === product.name);
+    return this.products.find(item => item.id === product.id);
   }
 
   addProduct(product: Product) {
@@ -33,7 +36,7 @@ export class ProductsService {
   }
 
   deleteProduct(product: Product) {
-    const index = this.products.findIndex(item => item.name === product.name);
+    const index = this.products.findIndex(item => item.id === product.id);
     if (index >= 0) {
       this.products.splice(index, 1);
     }

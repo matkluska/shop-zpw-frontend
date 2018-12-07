@@ -10,7 +10,7 @@ import {ProductsService} from '../products.service';
 })
 export class NewProductComponent implements OnInit {
 
-  model = new Product('', 0, 0, '', '');
+  model = new Product(this.guid(), '', 0, 0, '', '', 'Other');
 
 
   constructor(private productsService: ProductsService) {
@@ -20,17 +20,16 @@ export class NewProductComponent implements OnInit {
   }
 
   onSubmit() {
-    // this.submitted = true;
     this.productsService.addProduct(this.model);
   }
 
-  // addProduct(name: string, products_quantity: number, price: number, description: string, photo_url: string) {
-  //   const product = new Product();
-  //   product.name = name;
-  //   product.products_quantity = products_quantity;
-  //   product.price = price;
-  //   product.photo_url = photo_url;
-  //   this.productsService.addProduct(product);
-  // }
+  private guid() {
+    function s4() {
+      return Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1);
+    }
 
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+  }
 }

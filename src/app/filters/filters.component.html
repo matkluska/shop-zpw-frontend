@@ -1,0 +1,35 @@
+<div class="card">
+  <article class="card-group-item">
+    <header class="card-header">
+      <h6 class="title">Price range</h6>
+    </header>
+    <div class="filter-content">
+      <div class="card-body">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>Min</label>
+            <input type="number" class="form-control" id="inputEmail4" placeholder="$0">
+          </div>
+          <div class="form-group col-md-6 text-right">
+            <label>Max</label>
+            <input type="number" class="form-control" placeholder="$1,0000">
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+  <article class="card-group-item">
+    <header class="card-header">
+      <h6 class="title">Categories</h6>
+    </header>
+    <div class="filter-content">
+      <div class="card-body">
+        <div class="custom-control custom-checkbox" *ngFor="let category of categories">
+          <input type="checkbox" class="custom-control-input" id="{{category.id}}" (change)="toggleCategory(category)">
+          <label class="custom-control-label" for="{{category.id}}">{{category.label}}</label>
+        </div>
+      </div>
+    </div>
+  </article>
+</div>
+
