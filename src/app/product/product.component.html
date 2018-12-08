@@ -7,7 +7,7 @@
       <h4 class="card-title">
         <a href="#">{{product.name}}</a>
       </h4>
-      <h5>{{product.price}}$</h5>
+      <h5>{{product.price | currency:'USD':'symbol':'.2-4'}}</h5>
       <p class="card-text">{{product.description}}</p>
       <button type="button" class="btn btn-danger" (click)="deleteProduct(product)">Delete</button>
     </div>

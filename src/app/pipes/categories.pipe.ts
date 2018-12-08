@@ -8,7 +8,6 @@ import {Category} from '../category';
 export class CategoriesPipe implements PipeTransform {
 
   transform(products: Product[], categories: Category[]) {
-    console.log(categories);
     if (!products) {
       return [];
     }

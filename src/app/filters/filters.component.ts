@@ -1,6 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {CategoriesService} from '../categories.service';
 import {Category} from '../category';
+import {PriceRange} from '../price-range';
 
 @Component({
   selector: 'app-filters',
@@ -10,9 +11,12 @@ import {Category} from '../category';
 })
 export class FiltersComponent implements OnInit {
   @Output() checkedCategoriesEvent = new EventEmitter<Category[]>();
+  @Output() priceRangeChangedEvent = new EventEmitter<PriceRange>();
 
   private categories: Category[] = [];
   private checkedCategories: Category[] = [];
+  private minPrice: number;
+  private maxPrice: number;
 
   constructor(private categoriesService: CategoriesService) {
   }
@@ -29,5 +33,9 @@ export class FiltersComponent implements OnInit {
       this.checkedCategories.push(category);
     }
     this.checkedCategoriesEvent.emit(this.checkedCategories.slice(0));
+  }
+
+  priceRangeChanged(minPrice: number, maxPrice: number) {
+    this.priceRangeChangedEvent.emit(new PriceRange(minPrice, maxPrice));
   }
 }
