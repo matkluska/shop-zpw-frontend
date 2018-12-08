@@ -24,10 +24,12 @@ export class ProductComponent implements OnInit {
   }
 
   deleteProductFromShoppingCart(product: Product) {
+    product.products_quantity++;
     this.deleteProductFromShoppingCartEvent.emit(product);
   }
 
   addProductToShoppingCart(product: Product) {
+    product.products_quantity--;
     this.addProductToShoppingCartEvent.emit(product);
   }
 }

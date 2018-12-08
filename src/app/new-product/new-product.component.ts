@@ -1,35 +1,31 @@
 import {Component, OnInit} from '@angular/core';
 import {Product} from '../product';
 import {ProductsService} from '../products.service';
+import {Guid} from '../guid';
+import {CategoriesService} from '../categories.service';
+import {Category} from '../category';
 
 @Component({
   selector: 'app-new-product',
   templateUrl: './new-product.component.html',
   styleUrls: ['./new-product.component.css'],
-  providers: [ProductsService]
+  providers: [ProductsService, CategoriesService]
 })
 export class NewProductComponent implements OnInit {
 
-  model = new Product(this.guid(), '', 0, 0, '', '', 'Other');
+  private model = new Product(Guid.random(), '', 0, 0, '', '', 'Other');
+  private categories: Category[] = [];
 
 
-  constructor(private productsService: ProductsService) {
+  constructor(private productsService: ProductsService, private categoriesService: CategoriesService) {
   }
 
   ngOnInit() {
+    this.categories = this.categoriesService.getCategories();
   }
 
   onSubmit() {
     this.productsService.addProduct(this.model);
   }
 
-  private guid() {
-    function s4() {
-      return Math.floor((1 + Math.random()) * 0x10000)
-        .toString(16)
-        .substring(1);
-    }
-
-    return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
-  }
 }

@@ -48,6 +48,11 @@ export class ShoppingCartServiceService {
     return totalValue;
   }
 
+  clear() {
+    this.shoppingCartItems.clear();
+    this.saveInLocalStorage();
+  }
+
   private saveInLocalStorage() {
     localStorage.setItem(this.shoppingCartKey, JSON.stringify(Array.from(this.shoppingCartItems.entries())));
   }

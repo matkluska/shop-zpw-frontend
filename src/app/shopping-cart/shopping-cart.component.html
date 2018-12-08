@@ -1,5 +1,6 @@
 <div class="row">
   <div class="offset-lg-3 col-lg-9">
+    <h1>Your shopping cart</h1>
     <table class="table table-hover">
       <thead>
       <tr>
@@ -15,7 +16,7 @@
         <td>{{item.value.products_quantity}}</td>
         <td>{{item.value.name}}</td>
         <td>{{item.value.price | currency:'USD':'symbol':'.2-4'}}</td>
-        <td>{{item.value.products_quantity * item.value.price}}$</td>
+        <td>{{item.value.products_quantity * item.value.price | currency:'USD':'symbol':'.2-4'}}</td>
         <td>
           <button type="button" class="btn btn-labeled btn-success float-right btn-sm"
                   (click)="addProductToShoppingCart(item.value)">
@@ -33,9 +34,15 @@
         <td></td>
         <td></td>
         <td></td>
-        <td>Total value: {{getTotalValue()}}$</td>
+        <td>Total value: {{getTotalValue() | currency:'USD':'symbol':'.2-4'}}</td>
       </tr>
       </tfoot>
     </table>
+    <div class="row">
+      <div class="mx-auto">
+        <button type="button" class="btn btn-danger" routerLink="/" routerLinkActive="active">Back to shopping</button>
+        <button type="button" class="btn btn-success" routerLink="/order" routerLinkActive="active">Proceed order</button>
+      </div>
+    </div>
   </div>
 </div>

@@ -1,0 +1,65 @@
+<div class="row">
+  <div class="offset-lg-3 col-lg-9">
+    <div class="container">
+      <h1>Order</h1>
+      <form (ngSubmit)="onSubmit()" #orderForm="ngForm">
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input type="text" class="form-control" id="firstName"
+                 required
+                 [(ngModel)]="firstName" name="firstName"
+                 #firstNameText="ngModel">
+          <div [hidden]="firstNameText.valid || firstNameText.pristine"
+               class="alert alert-danger">
+            First Name is required
+          </div>
+        </div>
+
+        <label for="lastName">Last Name</label>
+        <input type="text" class="form-control" id="lastName"
+               required
+               [(ngModel)]="lastName" name="lastName"
+               #lastNameText="ngModel">
+        <div [hidden]="lastNameText.valid || lastNameText.pristine"
+             class="alert alert-danger">
+          Last Name is required
+        </div>
+
+        <label for="city">City</label>
+        <input type="text" class="form-control" id="city"
+               required
+               [(ngModel)]="city" name="city"
+               #cityText="ngModel">
+        <div [hidden]="cityText.valid || cityText.pristine"
+             class="alert alert-danger">
+          City is required
+        </div>
+
+        <label for="street">Street</label>
+        <input type="text" class="form-control" id="street"
+               required
+               [(ngModel)]="street" name="street"
+               #streetText="ngModel">
+        <div [hidden]="streetText.valid || streetText.pristine"
+             class="alert alert-danger">
+          Street is required
+        </div>
+
+        <label for="postalCode">Postal Code</label>
+        <input type="text" class="form-control" id="postalCode"
+               required
+               [(ngModel)]="postalCode" name="postalCode"
+               #postalCodeText="ngModel">
+        <div [hidden]="postalCodeText.valid || postalCodeText.pristine"
+             class="alert alert-danger">
+          Postal Code is required
+        </div>
+
+
+        <button type="button" class="btn btn-success" [disabled]="!orderForm.form.valid" (click)="onSubmit()">
+          Submit your order
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

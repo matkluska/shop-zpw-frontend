@@ -14,11 +14,13 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import {CategoriesPipe} from './pipes/categories.pipe';
 import {FiltersComponent} from './filters/filters.component';
 import {PriceRangePipe} from './pipes/price-range.pipe';
+import {OrderComponent} from './order/order.component';
 
 const appRoutes: Routes = [
   {path: 'products', component: ProductsComponent},
   {path: 'new-product', component: NewProductComponent},
   {path: 'shopping-cart', component: ShoppingCartComponent},
+  {path: 'order', component: OrderComponent},
   {path: '', component: ProductsComponent, pathMatch: 'full'}
 ];
 
@@ -30,6 +32,7 @@ const appRoutes: Routes = [
     NewProductComponent,
     ShoppingCartComponent,
     FiltersComponent,
+    OrderComponent,
     SafePipe,
     CategoriesPipe,
     PriceRangePipe
