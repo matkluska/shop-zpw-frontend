@@ -1,7 +1,9 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {AngularFireModule} from '@angular/fire';
+import {AngularFireAuthModule} from '@angular/fire/auth';
 
 
 import {AppComponent} from './app.component';
@@ -15,13 +17,24 @@ import {CategoriesPipe} from './pipes/categories.pipe';
 import {FiltersComponent} from './filters/filters.component';
 import {PriceRangePipe} from './pipes/price-range.pipe';
 import {OrderComponent} from './order/order.component';
+import {environment} from '../environments/environment';
+import {DashboardComponent} from './dashboard/dashboard.component';
+import {AuthGuard} from './auth-guard';
+import {LoginComponent} from './login/login.component';
+import {RegisterComponent} from './register/register.component';
 
 const appRoutes: Routes = [
-  {path: 'products', component: ProductsComponent},
-  {path: 'new-product', component: NewProductComponent},
-  {path: 'shopping-cart', component: ShoppingCartComponent},
-  {path: 'order', component: OrderComponent},
-  {path: '', component: ProductsComponent, pathMatch: 'full'}
+  {path: 'login', component: LoginComponent},
+  {path: 'register', component: RegisterComponent},
+  {
+    path: '', component: DashboardComponent, canActivate: [AuthGuard], children: [
+      {path: '', component: ProductsComponent},
+      {path: 'new-product', component: NewProductComponent},
+      {path: 'shopping-cart', component: ShoppingCartComponent},
+      {path: 'order', component: OrderComponent}
+    ]
+  },
+  {path: '**', redirectTo: 'login', pathMatch: 'full'}
 ];
 
 @NgModule({
@@ -35,13 +48,19 @@ const appRoutes: Routes = [
     OrderComponent,
     SafePipe,
     CategoriesPipe,
-    PriceRangePipe
+    PriceRangePipe,
+    DashboardComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
+    AngularFireModule.initializeApp(environment.firebaseConfig),
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     NgxPaginationModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    AngularFireAuthModule
   ],
   providers: [],
   bootstrap: [AppComponent]

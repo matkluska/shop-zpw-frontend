@@ -35,6 +35,6 @@ export class OrderComponent implements OnInit {
     const navigationExtras: NavigationExtras = {
       queryParams: {'order_id': guid}
     };
-    this.router.navigate(['/'], navigationExtras);
+    this.router.navigate(['/dashboard'], navigationExtras);
   }
 }

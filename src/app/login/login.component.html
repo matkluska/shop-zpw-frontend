@@ -1,0 +1,56 @@
+<div class="my-login-page">
+  <section class="h-100">
+    <div class="container h-100">
+      <div class="row justify-content-md-center h-100">
+        <div class="card-wrapper">
+          <div class="card fat">
+            <div class="card-body">
+              <h4 class="card-title text-center">Sign in</h4>
+              <form (ngSubmit)="onSubmit()" #loginForm="ngForm" class="my-login-validation">
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="text" class="form-control" id="email"
+                         required
+                         [(ngModel)]="email" name="email"
+                         #emailTxt="ngModel">
+                  <div [hidden]="emailTxt.valid || emailTxt.pristine"
+                       class="alert alert-danger">
+                    Email is required
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="password">Password</label>
+                  <input type="password" class="form-control" id="password"
+                         required
+                         [(ngModel)]="password" name="password"
+                         #passwordTxt="ngModel">
+                  <div [hidden]="passwordTxt.valid || passwordTxt.pristine"
+                       class="alert alert-danger">
+                    Password is required
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary btn-block" [disabled]="!loginForm.form.valid"
+                          (click)="onSubmit()">
+                    Login
+                  </button>
+                </div>
+                <div class="mt-4 text-center">
+                  Don't have an account? <a routerLink="/register" routerLinkActive="active">Create One</a>
+                </div>
+                <div [hidden]="!loginFailed" class="alert alert-warning">
+                  Incorrect email or password
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="footer">
+            Copyright &copy; 2018 &mdash; ZPW
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
