@@ -47,4 +47,13 @@ export class ProductsService {
     localStorage.setItem(this.productsKey, JSON.stringify(this.products));
   }
 
+  updateProductsQuantity(orderedProducts: Map<string, Product>) {
+    this.products.forEach(product => {
+      const orderedProduct = orderedProducts.get(product.id);
+      if (orderedProducts.has(product.id)) {
+        product.products_quantity = product.products_quantity - orderedProduct.products_quantity;
+      }
+    });
+    this.saveInLocalStorage();
+  }
 }
