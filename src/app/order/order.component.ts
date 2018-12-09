@@ -5,12 +5,13 @@ import {Guid} from '../guid';
 import {ShoppingCartServiceService} from '../shopping-cart-service.service';
 import {NavigationExtras, Router} from '@angular/router';
 import {ProductsService} from '../products.service';
+import {AuthService} from '../auth.service';
 
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.css'],
-  providers: [OrderService, ShoppingCartServiceService, ProductsService]
+  providers: [OrderService, ShoppingCartServiceService, ProductsService, AuthService]
 })
 export class OrderComponent implements OnInit {
 
@@ -21,7 +22,7 @@ export class OrderComponent implements OnInit {
   private postalCode: string;
 
   constructor(private orderService: OrderService, private shoppingCartService: ShoppingCartServiceService,
-              private productsService: ProductsService, private router: Router) {
+              private productsService: ProductsService, private router: Router, private authService: AuthService) {
   }
 
   ngOnInit() {
@@ -29,8 +30,8 @@ export class OrderComponent implements OnInit {
 
   onSubmit() {
     const guid = Guid.random();
-    const orderedProducts = this.shoppingCartService.getItems();
-    const order = new Order(guid, this.firstName, this.lastName, this.city, this.street, this.postalCode,
+    const orderedProducts = new Map(this.shoppingCartService.getItems());
+    const order = new Order(guid, this.authService.user.uid, this.firstName, this.lastName, this.city, this.street, this.postalCode,
       Array.from(orderedProducts.values()));
     this.orderService.addOrder(order);
     this.shoppingCartService.clear();

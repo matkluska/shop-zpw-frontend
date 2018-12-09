@@ -11,6 +11,7 @@ import {AuthService} from '../auth.service';
 })
 export class DashboardComponent implements OnInit {
   private orderId: string;
+  private isEmployee: boolean;
 
   constructor(private orderService: OrderService, private authService: AuthService, private route: ActivatedRoute, private router: Router) {
   }
@@ -22,6 +23,7 @@ export class DashboardComponent implements OnInit {
         this.addAutoCloseableAlert(orderId);
       }
     });
+    this.authService.isEmployee().subscribe(isEmployee => this.isEmployee = isEmployee);
   }
 
   addAutoCloseableAlert(orderId: string) {

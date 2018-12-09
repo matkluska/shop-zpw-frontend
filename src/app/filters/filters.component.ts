@@ -22,7 +22,7 @@ export class FiltersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.categories = this.categoriesService.getCategories();
+    this.categoriesService.getCategories().subscribe(categories => this.categories = categories);
   }
 
   toggleCategory(category: Category) {

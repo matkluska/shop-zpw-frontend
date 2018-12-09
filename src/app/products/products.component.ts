@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Product} from '../product';
 import {ProductsService} from '../products.service';
 import {ShoppingCartServiceService} from '../shopping-cart-service.service';
@@ -22,7 +22,8 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.products = this.productsService.getProducts();
+    this.productsService.getProducts()
+      .subscribe((data) => this.products = data);
   }
 
   onDeleteProduct(product: Product) {

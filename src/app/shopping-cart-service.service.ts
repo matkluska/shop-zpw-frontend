@@ -17,7 +17,7 @@ export class ShoppingCartServiceService {
   }
 
   getItems(): Map<string, Product> {
-    return new Map(this.shoppingCartItems);
+    return this.shoppingCartItems;
   }
 
   addProduct(product: Product) {

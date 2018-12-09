@@ -22,6 +22,13 @@ import {DashboardComponent} from './dashboard/dashboard.component';
 import {AuthGuard} from './auth-guard';
 import {LoginComponent} from './login/login.component';
 import {RegisterComponent} from './register/register.component';
+import {AngularFirestoreModule} from '@angular/fire/firestore';
+import {ManagementPanelComponent} from './management-panel/management-panel.component';
+import {EmployeeGuard} from './employee-guard';
+import {ManagementProductsComponent} from './management-products/management-products.component';
+import {ManagementOrdersComponent} from './management-orders/management-orders.component';
+import {AdminGuard} from './admin-guard';
+import { EditProductComponent } from './edit-product/edit-product.component';
 
 const appRoutes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -29,9 +36,16 @@ const appRoutes: Routes = [
   {
     path: '', component: DashboardComponent, canActivate: [AuthGuard], children: [
       {path: '', component: ProductsComponent},
-      {path: 'new-product', component: NewProductComponent},
       {path: 'shopping-cart', component: ShoppingCartComponent},
       {path: 'order', component: OrderComponent}
+    ]
+  },
+  {
+    path: 'admin', component: ManagementPanelComponent, canActivate: [EmployeeGuard], children: [
+      {path: '', component: ManagementOrdersComponent},
+      {path: 'products', component: ManagementProductsComponent, canActivate: [AdminGuard]},
+      {path: 'new-product', component: NewProductComponent, canActivate: [AdminGuard]},
+      {path: 'edit-product', component: EditProductComponent, canActivate: [AdminGuard]}
     ]
   },
   {path: '**', redirectTo: 'login', pathMatch: 'full'}
@@ -51,7 +65,11 @@ const appRoutes: Routes = [
     PriceRangePipe,
     DashboardComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ManagementPanelComponent,
+    ManagementProductsComponent,
+    ManagementOrdersComponent,
+    EditProductComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebaseConfig),
@@ -60,7 +78,8 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     NgxPaginationModule,
     RouterModule.forRoot(appRoutes),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFirestoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]

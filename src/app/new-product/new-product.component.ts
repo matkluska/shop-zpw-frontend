@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Product} from '../product';
 import {ProductsService} from '../products.service';
-import {Guid} from '../guid';
 import {CategoriesService} from '../categories.service';
 import {Category} from '../category';
 
@@ -13,7 +12,7 @@ import {Category} from '../category';
 })
 export class NewProductComponent implements OnInit {
 
-  private model = new Product(Guid.random(), '', 0, 0, '', '', 'Other');
+  private model = new Product('', '', 0, 0, '', '', 'other');
   private categories: Category[] = [];
 
 
@@ -21,7 +20,7 @@ export class NewProductComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.categories = this.categoriesService.getCategories();
+    this.categoriesService.getCategories().subscribe(categories => this.categories = categories);
   }
 
   onSubmit() {

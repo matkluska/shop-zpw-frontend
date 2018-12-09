@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="offset-lg-3 col-lg-9">
+    <h1>Products</h1>
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Product</th>
+        <th scope="col">Price</th>
+        <th scope="col">Category</th>
+        <th scope="col"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let product of products">
+        <td>{{product.products_quantity}}</td>
+        <td>{{product.name}}</td>
+        <td>{{product.category}}</td>
+        <td>{{product.price | currency:'USD':'symbol':'.2-4'}}</td>
+        <td>
+          <button type="button" class="btn btn-labeled btn-secondary float-right btn-sm" (click)="editProductRedirect(product.id)">
+            <i class="fa fa-edit"></i>
+          </button>
+          <button type="button" class="btn btn-labeled btn-danger float-right btn-sm"
+                  (click)="deleteProduct(product)">
+            <i class="fa fa-trash-o"></i>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

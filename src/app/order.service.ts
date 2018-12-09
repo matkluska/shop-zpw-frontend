@@ -1,36 +1,34 @@
 import {Injectable} from '@angular/core';
 import {Order} from './order';
+import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrderService {
-  private ordersKey = 'orders';
+  private ordersCollection: AngularFirestoreCollection<Order>;
 
-  private orders: Map<string, Order> = new Map<string, Order>();
-
-  constructor() {
-    const orders = localStorage.getItem(this.ordersKey);
-    if (orders) {
-      this.orders = new Map<string, Order>(JSON.parse(orders));
-    }
+  constructor(private firestore: AngularFirestore) {
+    this.ordersCollection = firestore.collection('/orders');
   }
+
+  getOrders(userId: string): Observable<Order[]> {
+    return this.ordersCollection.snapshotChanges()
+      .pipe(map(data => {
+        return data
+          .filter(o => o.payload.doc.data().userId === userId)
+          .map(o => {
+            const order = o.payload.doc.data() as Order;
+            order.id = o.payload.doc.id;
+            return order;
+          });
+      }));
+  }
+
 
   addOrder(order: Order) {
-    this.orders.set(order.id, order);
-    this.saveInLocalStorage();
-  }
-
-  getOrder(id: string): Order {
-    return this.orders.get(id);
-  }
-
-  cancelOrder(id: string) {
-    this.orders.delete(id);
-    this.saveInLocalStorage();
-  }
-
-  private saveInLocalStorage() {
-    localStorage.setItem(this.ordersKey, JSON.stringify(Array.from(this.orders.entries())));
+    this.ordersCollection.add({...order});
   }
 }
