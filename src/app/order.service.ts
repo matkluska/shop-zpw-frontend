@@ -14,11 +14,23 @@ export class OrderService {
     this.ordersCollection = firestore.collection('/orders');
   }
 
-  getOrders(userId: string): Observable<Order[]> {
+  getAllOrders(): Observable<Order[]> {
     return this.ordersCollection.snapshotChanges()
       .pipe(map(data => {
         return data
-          .filter(o => o.payload.doc.data().userId === userId)
+          .map(o => {
+            const order = o.payload.doc.data() as Order;
+            order.id = o.payload.doc.id;
+            return order;
+          });
+      }));
+  }
+
+  getOrders(email: string): Observable<Order[]> {
+    return this.ordersCollection.snapshotChanges()
+      .pipe(map(data => {
+        return data
+          .filter(o => o.payload.doc.data().email === email)
           .map(o => {
             const order = o.payload.doc.data() as Order;
             order.id = o.payload.doc.id;
@@ -30,5 +42,9 @@ export class OrderService {
 
   addOrder(order: Order) {
     this.ordersCollection.add({...order});
+  }
+
+  updateOrder(order: Order) {
+    this.ordersCollection.doc(order.id).update({...order});
   }
 }

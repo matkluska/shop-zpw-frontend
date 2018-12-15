@@ -6,6 +6,7 @@ import {ShoppingCartServiceService} from '../shopping-cart-service.service';
 import {NavigationExtras, Router} from '@angular/router';
 import {ProductsService} from '../products.service';
 import {AuthService} from '../auth.service';
+import {Product} from '../product';
 
 @Component({
   selector: 'app-order',
@@ -31,8 +32,8 @@ export class OrderComponent implements OnInit {
   onSubmit() {
     const guid = Guid.random();
     const orderedProducts = new Map(this.shoppingCartService.getItems());
-    const order = new Order(guid, this.authService.user.uid, this.firstName, this.lastName, this.city, this.street, this.postalCode,
-      Array.from(orderedProducts.values()));
+    const order = new Order(guid, this.authService.user.email, this.firstName, this.lastName, this.city, this.street, this.postalCode,
+      Array.from(orderedProducts.values()), this.calcTotalValue(Array.from(orderedProducts.values())));
     this.orderService.addOrder(order);
     this.shoppingCartService.clear();
     this.productsService.updateProductsQuantity(orderedProducts);
@@ -41,5 +42,11 @@ export class OrderComponent implements OnInit {
       queryParams: {'order_id': guid}
     };
     this.router.navigate(['/'], navigationExtras);
+  }
+
+  private calcTotalValue(products: Product[]): number {
+    let totalValue = 0;
+    products.forEach(product => totalValue += product.products_quantity * product.price);
+    return totalValue;
   }
 }
