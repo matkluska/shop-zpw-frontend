@@ -23,6 +23,7 @@ export class ShoppingCartServiceService {
   addProduct(product: Product) {
     if (this.shoppingCartItems.has(product.id)) {
       const oldProduct = this.shoppingCartItems.get(product.id);
+      console.log(oldProduct);
       this.shoppingCartItems.set(product.id, {...oldProduct, products_quantity: oldProduct.products_quantity + 1});
     } else {
       this.shoppingCartItems.set(product.id, {...product, products_quantity: 1});

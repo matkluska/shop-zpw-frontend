@@ -41,4 +41,11 @@ export class ManagementProductsComponent implements OnInit {
     };
     this.router.navigate(['/admin/edit-product'], navigationExtras);
   }
+
+  timeDiscountRedirect(productId: string) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {'product_id': productId}
+    };
+    this.router.navigate(['/admin/time-discount'], navigationExtras);
+  }
 }

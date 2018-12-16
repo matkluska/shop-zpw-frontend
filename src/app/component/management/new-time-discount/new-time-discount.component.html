@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="offset-lg-3 col-lg-9">
+    <div class="container">
+      <h1>New Time Discount for: {{product.name}}</h1>
+      <form (ngSubmit)="onSubmit()" #newTimeDiscountForm="ngForm">
+        <div class="form-group">
+          <label for="discountPercent">Discount percent %</label>
+          <input type="number" min="0" max="100" class="form-control" id="discountPercent"
+                 required
+                 [(ngModel)]="timeDiscount.discountPercent" name="discountPercent"
+                 #discountPercent="ngModel">
+          <div [hidden]="discountPercent.valid || discountPercent.pristine"
+               class="alert alert-danger">
+            Discount percentage is required
+          </div>
+
+          <label for="duration">Duration in minutes</label>
+          <input type="number" min="0" class="form-control" id="duration"
+                 required
+                 [(ngModel)]="timeDiscount.endTime" name="duration"
+                 #duration="ngModel">
+          <div [hidden]="duration.valid || duration.pristine"
+               class="alert alert-danger">
+            Duration is required
+          </div>
+        </div>
+        <div>
+          Price before discount: {{product.price | currency:'USD':'symbol':'.2'}}
+        </div>
+        <div>
+          Price after
+          discount: {{product.price * (100 - timeDiscount.discountPercent) / 100 | currency:'USD':'symbol':'.2'}}
+        </div>
+
+        <button type="button" class="btn btn-primary" [disabled]="!newTimeDiscountForm.form.valid" (click)="onSubmit()"
+                routerLink="/admin" routerLinkActive="active">
+          Add discount
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

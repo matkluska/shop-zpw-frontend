@@ -15,14 +15,14 @@ export class OrdersRestImplService implements OrdersService {
   }
 
   addOrder(order: Order): Promise<any> {
-    return this.http.post<Category>(`${environment.serverURL}/orders`, order).toPromise();
+    return this.http.post<Category>(`${environment.apiRoot}/orders`, order).toPromise();
   }
 
   getAllOrders(): Observable<Order[]> {
-    return this.http.get<Order[]>(`${environment.serverURL}/orders`);
+    return this.http.get<Order[]>(`${environment.apiRoot}/orders`);
   }
 
   updateOrder(order: Order): Promise<any> {
-    return this.http.put<void>(`${environment.serverURL}/orders/${order.id}`, order).toPromise();
+    return this.http.put<void>(`${environment.apiRoot}/orders/${order.id}`, order).toPromise();
   }
 }

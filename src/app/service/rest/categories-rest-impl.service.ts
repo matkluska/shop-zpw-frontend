@@ -14,6 +14,6 @@ export class CategoriesRestImplService implements CategoriesService {
   }
 
   getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(`${environment.serverURL}/categories`);
+    return this.http.get<Category[]>(`${environment.apiRoot}/categories`);
   }
 }

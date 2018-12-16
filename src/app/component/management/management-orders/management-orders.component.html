@@ -14,7 +14,7 @@
       <tr *ngFor="let order of orders">
         <td>{{order.email}}</td>
         <td>{{order.state}}</td>
-        <td>{{order.totalValue | currency:'USD':'symbol':'.2-4'}}</td>
+        <td>{{order.totalValue | currency:'USD':'symbol':'.2'}}</td>
         <td>
           <button type="button" class="btn btn-labeled btn-secondary float-right btn-sm" data-toggle="modal"
                   [attr.data-target]="'#editDetails-' + order.id">
@@ -91,8 +91,8 @@
                     <tr *ngFor="let product of order.products">
                       <td>{{product.products_quantity}}</td>
                       <td>{{product.name}}</td>
-                      <td>{{product.price | currency:'USD':'symbol':'.2-4'}}</td>
-                      <td>{{product.products_quantity * product.price | currency:'USD':'symbol':'.2-4'}}</td>
+                      <td>{{product.price | currency:'USD':'symbol':'.2'}}</td>
+                      <td>{{product.products_quantity * product.price | currency:'USD':'symbol':'.2'}}</td>
                       <td>
                         <input type="checkbox" [checked]="product.is_ready" [(ngModel)]="product.is_ready"/>
                       </td>
@@ -107,7 +107,7 @@
                   </div>
                   <div class="row">
                     <div class="col-md-4 ml-auto">
-                      <h6>{{order.totalValue | currency:'USD':'symbol':'.2-4'}}</h6>
+                      <h6>{{order.totalValue | currency:'USD':'symbol':'.2'}}</h6>
                     </div>
                   </div>
                 </div>

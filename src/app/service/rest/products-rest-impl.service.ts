@@ -15,22 +15,22 @@ export class ProductsRestImplService extends ProductsService {
   }
 
   addProduct(product: Product): Promise<any> {
-    return this.http.post<Product>(`${environment.serverURL}/products`, product).toPromise();
+    return this.http.post<Product>(`${environment.apiRoot}/products`, product).toPromise();
   }
 
   deleteProduct(product: Product): Promise<any> {
-    return this.http.delete(`${environment.serverURL}/products/${product.id}`).toPromise();
+    return this.http.delete(`${environment.apiRoot}/products/${product.id}`).toPromise();
   }
 
   getProduct(productId: string): Observable<Product> {
-    return this.http.get<Product>(`${environment.serverURL}/products/${productId}`);
+    return this.http.get<Product>(`${environment.apiRoot}/products/${productId}`);
   }
 
   getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(`${environment.serverURL}/products`);
+    return this.http.get<Product[]>(`${environment.apiRoot}/products`);
   }
 
   updateProduct(product: Product): Promise<any> {
-    return this.http.put<void>(`${environment.serverURL}/products/${product.id}`, product).toPromise();
+    return this.http.put<void>(`${environment.apiRoot}/products/${product.id}`, product).toPromise();
   }
 }

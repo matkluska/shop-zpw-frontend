@@ -8,6 +8,7 @@ import {PriceRange} from '../../../model/price-range';
 import {ProductsService} from '../../../service/products-service';
 import {ProductsServiceFactory} from '../../../service/products-service-factory';
 import {AngularFirestore} from '@angular/fire/firestore';
+import {SocketService} from '../../../service/socket.service';
 
 @Component({
   selector: 'app-products',
@@ -19,7 +20,8 @@ import {AngularFirestore} from '@angular/fire/firestore';
       useFactory: ProductsServiceFactory,
       deps: [AngularFirestore, HttpClient]
     },
-    ShoppingCartServiceService
+    ShoppingCartServiceService,
+    SocketService
   ]
 })
 export class ProductsComponent implements OnInit {
@@ -29,12 +31,30 @@ export class ProductsComponent implements OnInit {
   private priceRange = new PriceRange(0, Number.MAX_SAFE_INTEGER);
   currentPageNumber = 0;
 
-  constructor(private productsService: ProductsService, private shoppingCartService: ShoppingCartServiceService) {
+  constructor(private productsService: ProductsService, private shoppingCartService: ShoppingCartServiceService,
+              private socketService: SocketService) {
   }
 
   ngOnInit() {
     this.productsService.getProducts()
       .subscribe((data) => this.products = data);
+
+    this.socketService.onTimeDiscount().subscribe(() => {
+      this.productsService.getProducts()
+        .subscribe((data) => this.products = data);
+    });
+
+    this.socketService.onEndDiscount().subscribe((productId) => {
+      this.productsService.getProduct(productId)
+        .subscribe((product) => {
+          this.productsService.updateProduct({...product, discount_percent: 0, discount_end_time: 0}).then(() =>
+            this.productsService.getProducts()
+              .subscribe((data) => {
+                this.products = data;
+              }))
+          ;
+        });
+    });
   }
 
   onAddToShoppingCart(product: Product) {

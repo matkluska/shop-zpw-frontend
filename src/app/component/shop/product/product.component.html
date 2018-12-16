@@ -1,5 +1,5 @@
 <div>
-  <div class="card h-100">
+  <div class="card h-100" [style.border]="isDiscounted ? '3px solid #e0d755c4': ''">
     <a href="#"><img class="card-img-top"
                      [src]="(product.photo_url || 'http://home4cooperation.info/sites/all/themes/home_of_cooperation_bootstrap_subtheme/images/default.jpg') | safe"
                      alt="Product picture"></a>
@@ -7,10 +7,13 @@
       <h4 class="card-title">
         <a href="#">{{product.name}}</a>
       </h4>
-      <h5>{{product.price | currency:'USD':'symbol':'.2-4'}}</h5>
+      <h5>
+        {{(isDiscounted ? discountedPrice : product.price) | currency:'USD':'symbol':'.2'}}
+        <u style="color: rgba(250,0,1,0.7);">{{isDiscounted ? '-' + product.discount_percent + '%' : ''}}</u>
+      </h5>
       <p class="card-text">{{product.description}}</p>
     </div>
-    <div class="card-footer">
+    <div class="card-footer" [style.background-color]="isDiscounted ? '#e0d755c4': ''">
       <div class="row">
         <small class="text-muted"># {{product.products_quantity}}</small>
         <div class="col float-right">

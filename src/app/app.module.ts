@@ -31,7 +31,8 @@ import {AdminGuard} from './guard/admin-guard';
 import {EditProductComponent} from './component/management/edit-product/edit-product.component';
 import {BackendTypeService} from './service/backend-type.service';
 import {configuration} from '../environments/config';
-import { BackendTypeComponent } from './component/management/backend-type/backend-type.component';
+import {BackendTypeComponent} from './component/management/backend-type/backend-type.component';
+import {NewTimeDiscountComponent} from './component/management/new-time-discount/new-time-discount.component';
 
 const appRoutes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -49,13 +50,14 @@ const appRoutes: Routes = [
       {path: 'products', component: ManagementProductsComponent, canActivate: [AdminGuard]},
       {path: 'new-product', component: NewProductComponent, canActivate: [AdminGuard]},
       {path: 'edit-product', component: EditProductComponent, canActivate: [AdminGuard]},
-      {path: 'configuration', component: BackendTypeComponent, canActivate: [AdminGuard]}
+      {path: 'configuration', component: BackendTypeComponent, canActivate: [AdminGuard]},
+      {path: 'time-discount', component: NewTimeDiscountComponent, canActivate: [AdminGuard]}
     ]
   },
   {path: '**', redirectTo: 'login', pathMatch: 'full'}
 ];
 
-function getConfiguration(backendTypeService: BackendTypeService) {
+export function getConfiguration(backendTypeService: BackendTypeService) {
   return () => backendTypeService.getConfig()
     .toPromise()
     .then(config => configuration.backend = config.backend);
@@ -80,7 +82,8 @@ function getConfiguration(backendTypeService: BackendTypeService) {
     ManagementProductsComponent,
     ManagementOrdersComponent,
     EditProductComponent,
-    BackendTypeComponent
+    BackendTypeComponent,
+    NewTimeDiscountComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebaseConfig),

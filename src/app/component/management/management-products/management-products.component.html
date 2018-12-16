@@ -6,8 +6,8 @@
       <tr>
         <th scope="col">Quantity</th>
         <th scope="col">Product</th>
-        <th scope="col">Price</th>
         <th scope="col">Category</th>
+        <th scope="col">Price</th>
         <th scope="col"></th>
       </tr>
       </thead>
@@ -16,10 +16,13 @@
         <td>{{product.products_quantity}}</td>
         <td>{{product.name}}</td>
         <td>{{product.category}}</td>
-        <td>{{product.price | currency:'USD':'symbol':'.2-4'}}</td>
+        <td>{{product.price | currency:'USD':'symbol':'.2'}}</td>
         <td>
           <button type="button" class="btn btn-labeled btn-secondary float-right btn-sm" (click)="editProductRedirect(product.id)">
             <i class="fa fa-edit"></i>
+          </button>
+          <button type="button" class="btn btn-labeled btn-primary float-right btn-sm" (click)="timeDiscountRedirect(product.id)">
+            <i class="fa fa-percent"></i>
           </button>
           <button type="button" class="btn btn-labeled btn-danger float-right btn-sm"
                   (click)="deleteProduct(product)">

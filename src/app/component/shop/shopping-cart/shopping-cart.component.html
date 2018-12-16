@@ -15,8 +15,8 @@
       <tr *ngFor="let item of cartItems | keyvalue">
         <td>{{item.value.products_quantity}}</td>
         <td>{{item.value.name}}</td>
-        <td>{{item.value.price | currency:'USD':'symbol':'.2-4'}}</td>
-        <td>{{item.value.products_quantity * item.value.price | currency:'USD':'symbol':'.2-4'}}</td>
+        <td>{{item.value.price | currency:'USD':'symbol':'.2'}}</td>
+        <td>{{item.value.products_quantity * item.value.price | currency:'USD':'symbol':'.2'}}</td>
         <td>
           <button type="button" class="btn btn-labeled btn-success float-right btn-sm"
                   (click)="addProductToShoppingCart(item.value)">
@@ -34,7 +34,7 @@
         <td></td>
         <td></td>
         <td></td>
-        <td>Total value: {{getTotalValue() | currency:'USD':'symbol':'.2-4'}}</td>
+        <td>Total value: {{getTotalValue() | currency:'USD':'symbol':'.2'}}</td>
       </tr>
       </tfoot>
     </table>
