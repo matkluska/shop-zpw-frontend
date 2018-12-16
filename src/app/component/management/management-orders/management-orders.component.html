@@ -1,0 +1,128 @@
+<div class="row">
+  <div class="offset-lg-3 col-lg-9">
+    <h1>Orders</h1>
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th scope="col">Email</th>
+        <th scope="col">State</th>
+        <th scope="col">Value</th>
+        <th scope="col"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let order of orders">
+        <td>{{order.email}}</td>
+        <td>{{order.state}}</td>
+        <td>{{order.totalValue | currency:'USD':'symbol':'.2-4'}}</td>
+        <td>
+          <button type="button" class="btn btn-labeled btn-secondary float-right btn-sm" data-toggle="modal"
+                  [attr.data-target]="'#editDetails-' + order.id">
+            Details <i class="fa fa-edit"></i>
+          </button>
+          <button *ngIf="order.state === orderState.WAITING" type="button"
+                  class="btn btn-labeled btn-success float-right btn-sm"
+                  (click)="toRealization(order)">
+            To realization <i class="fa fa-arrow-circle-o-up"></i>
+          </button>
+          <button *ngIf="order.state === orderState.IN_REALIZATION" type="button"
+                  class="btn btn-labeled btn-success float-right btn-sm" [disabled]="!isReadyToShip(order)"
+                  (click)="shipped(order)">
+            Shipped <i class="fa fa-arrow-circle-o-up"></i>
+          </button>
+        </td>
+
+        <div class="modal fade" [attr.id]="'editDetails-' + order.id" tabindex="-1" role="dialog"
+             aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Order details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="container-fluid">
+                  <div class="row">
+                    <h6>Order state</h6>
+                  </div>
+                  <div class="row">
+                    {{order.state}}
+                  </div>
+                  <div *ngIf="order.state == orderState.SHIPPED" class="row">
+                    Shipping time: {{order.shippingTime | date: 'short'}}
+                  </div>
+                  <div class="row">
+                    <p></p>
+                  </div>
+                  <div class="row">
+                    <h6>Address</h6>
+                  </div>
+                  <div class="row">
+                    {{order.firstName}} {{order.lastName}}
+                  </div>
+                  <div class="row">
+                    {{order.street}}
+                  </div>
+                  <div class="row">
+                    {{order.postalCode}}, {{order.city}}
+                  </div>
+                  <div class="row">
+                    <a href="mailto:#">{{order.email}}</a>
+                  </div>
+                  <div class="row">
+                    <p></p>
+                  </div>
+                  <div class="row">
+                    <h6>Products</h6>
+                  </div>
+                  <table class="table table-hover">
+                    <thead>
+                    <tr>
+                      <th scope="col">Quantity</th>
+                      <th scope="col">Product</th>
+                      <th scope="col">Unit Price</th>
+                      <th scope="col">Value</th>
+                      <th scope="col">Is ready</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let product of order.products">
+                      <td>{{product.products_quantity}}</td>
+                      <td>{{product.name}}</td>
+                      <td>{{product.price | currency:'USD':'symbol':'.2-4'}}</td>
+                      <td>{{product.products_quantity * product.price | currency:'USD':'symbol':'.2-4'}}</td>
+                      <td>
+                        <input type="checkbox" [checked]="product.is_ready" [(ngModel)]="product.is_ready"/>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+
+                  <div class="row">
+                    <div class="col-md-4  ml-auto">
+                      <h6>Total value:</h6>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4 ml-auto">
+                      <h6>{{order.totalValue | currency:'USD':'symbol':'.2-4'}}</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="updateOrder(order)" data-dismiss="modal">Save
+                  changes
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

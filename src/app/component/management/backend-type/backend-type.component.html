@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="offset-lg-3 col-lg-9">
+    <div class="container">
+      <h1>Configuration</h1>
+      <form (ngSubmit)="updateConfig()" #configurationForm="ngForm">
+        <div class="form-group">
+          <label><input type="radio" class="form-control" id="firebase"
+                        required
+                        value="firebase"
+                        [(ngModel)]="config.backend" name="firebase"
+                        #backend="ngModel">
+            Firebase
+          </label><br>
+
+          <label>
+            <input type="radio" class="form-control" id="rest"
+                   required
+                   value="rest"
+                   [(ngModel)]="config.backend" name="rest"
+                   #backend="ngModel">
+            Rest
+          </label>
+          <div [hidden]="backend.valid || backend.pristine"
+               class="alert alert-danger">
+            Backend type is required
+          </div>
+        </div>
+
+        <button type="button" class="btn btn-success" [disabled]="!configurationForm.form.valid"
+                (click)="updateConfig()"
+                routerLink="/admin" routerLinkActive="active">
+          Update configuration
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
